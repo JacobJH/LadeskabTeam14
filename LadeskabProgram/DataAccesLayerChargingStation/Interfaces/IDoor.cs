@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace DataAccesLayerChargingStation.Interfaces
@@ -7,11 +6,11 @@ namespace DataAccesLayerChargingStation.Interfaces
     public interface IDoor
     {
         public void LockDoor();
+        
+        public void UnlockDoor();
 
-        public void UnLockDoor();
+        public void DoorOpened();
 
-        //public void DoorOpened();
-
-        //public void DoorClosed();
+        public void DoorClosed();
     }
 }

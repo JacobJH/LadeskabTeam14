@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccesLayerChargingStation.Interfaces;
 using UsbSimulator;
 
 namespace Ladeskab
@@ -21,6 +22,7 @@ namespace Ladeskab
         // Her mangler flere member variable
         private LadeskabState _state;
         private IUsbCharger _charger;
+        private IDoor _door;
         private int _oldId;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
