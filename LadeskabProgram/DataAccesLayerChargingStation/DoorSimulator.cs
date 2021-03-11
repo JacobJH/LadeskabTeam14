@@ -2,19 +2,23 @@
 
 namespace DataAccesLayerChargingStation.Interfaces
 {
-    class DoorSimulator : IDoor
+    public class DoorSimulator : IDoor
     {
+        public DoorSimulator()
+        {
+        }
+
         public void UnlockDoor()
         {
             throw new NotImplementedException();
         }
 
-        public void DoorOpened()
+        public void OnDoorOpen()
         {
             throw new NotImplementedException();
         }
 
-        public void DoorClosed()
+        public void OnDoorClose()
         {
             throw new NotImplementedException();
         }

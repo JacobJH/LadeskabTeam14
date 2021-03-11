@@ -1,8 +1,14 @@
-﻿    class Program
+﻿    using System;
+    using DataAccesLayerChargingStation.Interfaces;
+
+    class Program
     {
         static void Main(string[] args)
         {
 				// Assemble your system here from all the classes
+                IDoor door = new DoorSimulator();
+
+
 
             bool finish = false;
             do

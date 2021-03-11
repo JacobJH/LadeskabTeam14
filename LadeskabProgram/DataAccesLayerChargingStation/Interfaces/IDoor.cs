@@ -9,8 +9,8 @@ namespace DataAccesLayerChargingStation.Interfaces
         
         public void UnlockDoor();
 
-        public void DoorOpened();
+        public void OnDoorOpen();
 
-        public void DoorClosed();
+        public void OnDoorClose();
     }
 }

@@ -29,7 +29,17 @@ namespace Ladeskab
 
         // Her mangler constructor
 
+
+
+
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
+        public StationControl(IUsbCharger charger, IDoor door) //temp, tror denne er goodie :3
+        {
+            _charger = charger;
+            _door = door;
+        }
+
+
         private void RfidDetected(int id)
         {
             switch (_state)

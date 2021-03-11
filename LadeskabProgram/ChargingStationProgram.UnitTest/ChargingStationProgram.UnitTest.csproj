@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChargingStationLogicLayer\ChargingStationLogicLayer.csproj" />
-    <ProjectReference Include="..\DataAccesLayerChargingStation\DataAccesLayerChargingStation.csproj" />
+    <ProjectReference Include="..\ChargingStationLogicLayer\LogicLayer.csproj" />
+    <ProjectReference Include="..\DataAccesLayerChargingStation\DataAccesLayer.csproj" />
     <ProjectReference Include="..\LadeskabProgram\ChargingStationProgram.csproj" />
   </ItemGroup>
 
