@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.30709.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChargingStationProgram", "LadeskabProgram\ChargingStationProgram.csproj", "{B889A6BC-7069-4577-9B5B-5937989A3D39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChargingStationLogicLayer", "ChargingStationLogicLayer\ChargingStationLogicLayer.csproj", "{A776ABBB-36A2-4DA1-B66F-23DC9ADF8DF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "ChargingStationLogicLayer\LogicLayer.csproj", "{A776ABBB-36A2-4DA1-B66F-23DC9ADF8DF5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChargingStationProgram.UnitTest", "ChargingStationProgram.UnitTest\ChargingStationProgram.UnitTest.csproj", "{D44B75D6-635B-4978-9DDB-A76064ED742A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccesLayerChargingStation", "DataAccesLayerChargingStation\DataAccesLayerChargingStation.csproj", "{B8AA1342-CA5D-4834-A1CF-BFB644D7F824}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B791D6C0-90D7-4D5D-9C00-E531AFAD4851}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		ChargingStation.vsdx = ChargingStation.vsdx
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs", "EventArgs\EventArgs.csproj", "{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{D44B75D6-635B-4978-9DDB-A76064ED742A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D44B75D6-635B-4978-9DDB-A76064ED742A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D44B75D6-635B-4978-9DDB-A76064ED742A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8AA1342-CA5D-4834-A1CF-BFB644D7F824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8AA1342-CA5D-4834-A1CF-BFB644D7F824}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8AA1342-CA5D-4834-A1CF-BFB644D7F824}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8AA1342-CA5D-4834-A1CF-BFB644D7F824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
