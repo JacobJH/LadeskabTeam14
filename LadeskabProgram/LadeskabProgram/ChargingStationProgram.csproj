@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChargingStationLogicLayer\LogicLayer.csproj" />
-    <ProjectReference Include="..\PresentationsLag\PresentationsLag.csproj" />
   </ItemGroup>
 
 </Project>

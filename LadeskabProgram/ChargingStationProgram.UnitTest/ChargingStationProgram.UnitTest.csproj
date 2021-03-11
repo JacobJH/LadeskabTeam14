@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChargingStationLogicLayer\LogicLayer.csproj" />
-    <ProjectReference Include="..\DataAccesLayerChargingStation\DataAccesLayer.csproj" />
     <ProjectReference Include="..\LadeskabProgram\ChargingStationProgram.csproj" />
   </ItemGroup>
 
