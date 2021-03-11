@@ -38,7 +38,7 @@ namespace UsbSimulator
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
         {
             // Only execute if charging
-            if (_charging)
+            if (_charging) 
             {
                 _ticksSinceStart++;
                 if (Connected && !_overload)
