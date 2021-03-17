@@ -13,6 +13,6 @@ namespace EventArguments
 
     public class DoorEventArgs: EventArgs
     {
-        public DoorState EventDoorState;
+        public DoorState EventDoorState { get; set; }
     }
 }
