@@ -12,8 +12,8 @@ namespace LogicLayer.Boundary
 
         public void OnRfidRead(int id)
         {
-            
             RFIDReaderEvent?.Invoke(this, new RFIDDetectedArgs() { IncomingRFIDFromScanner = id });
         }
+        //TODO mangler Tests
     }
 }
