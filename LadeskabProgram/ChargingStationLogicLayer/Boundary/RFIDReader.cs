@@ -1,4 +1,5 @@
 ﻿using System;
+using LogicLayer.Boundary.Interfaces;
 
 namespace LogicLayer.Boundary
 {

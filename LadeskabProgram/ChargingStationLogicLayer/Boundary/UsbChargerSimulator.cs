@@ -2,6 +2,7 @@
 using System.Timers;
 using LogicLayer.Boundary.Interfaces;
 using EventArguments;
+using CurrentEventArgs = LogicLayer.Boundary.Interfaces.CurrentEventArgs;
 
 namespace LogicLayer.Boundary
 {
