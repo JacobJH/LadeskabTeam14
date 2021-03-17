@@ -12,10 +12,9 @@ namespace LogicLayer.Boundary.Interfaces
 
         public void StopCharge();
 
-        public bool Connected { get; set; } 
+        public bool Connected { get; set; }
 
         // Findes der flere metoder / properties så skriv dem under her:
-
 
 
     }
