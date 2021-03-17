@@ -9,28 +9,69 @@ namespace LogicLayer.Boundary
         public event EventHandler<DoorEventArgs> openDoorEvent;
         public event EventHandler<DoorEventArgs> closeDoorEvent;
 
+        private bool DoorIsOpen;
+        private bool DoorIsLocked;
+
         public DoorSimulator()
         {
+            DoorIsLocked = false;
+            DoorIsOpen = false;
         }
+
 
         public void UnlockDoor()
         {
-            throw new NotImplementedException();
+            if (DoorIsLocked && !DoorIsOpen)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                Console.WriteLine("Kan ikke låse døren op, hvis den ikke er lukket og låst");
+            }
         }
 
         public void OnDoorOpen()
         {
-            openDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            if (!DoorIsOpen)
+            {
+                if (!DoorIsLocked)
+                {
+                    openDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Opened });
+                    DoorIsOpen = true;
+                }
+                else
+                {
+                    Console.WriteLine("Døren er låst og kan ikke åbnes");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Kan ikke åbne døren, hvis den allerede er åben");
+            }
+            
         }
 
         public void OnDoorClose()
         {
-            closeDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Closed });
+            if (DoorIsOpen)
+            {
+                closeDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Closed });
+                DoorIsOpen = false;
+            }
+            
         }
 
         public void LockDoor()
         {
-            throw new NotImplementedException();
+            if (!DoorIsLocked && !DoorIsOpen)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                Console.WriteLine("Kan ikke låse døren, hvis den ikke er lukket og ulåst");
+            }
         }
     }
 }
