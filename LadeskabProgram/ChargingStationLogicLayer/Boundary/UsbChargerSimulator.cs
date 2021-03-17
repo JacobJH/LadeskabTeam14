@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using LogicLayer.Boundary.Interfaces;
+using EventArguments;
 
 namespace LogicLayer.Boundary
 {

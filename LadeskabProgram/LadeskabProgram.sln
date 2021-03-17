@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ChargingStation.vsdx = ChargingStation.vsdx
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventArgs", "EventArgs\EventArgs.csproj", "{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventArguments", "EventArgs\EventArguments.csproj", "{CC72E47B-4E72-4EC5-A8C5-15AAE1D02E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
