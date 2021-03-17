@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PresentationsLag
+namespace LogicLayer.Boundary
 {
     public class RFIDReader : IRFID
     {

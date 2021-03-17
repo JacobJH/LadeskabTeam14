@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace PresentationsLag
+namespace LogicLayer.Boundary.Interfaces
 {
     public interface IRFID
     {
