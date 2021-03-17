@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ladeskab.Interfaces;
+using LogicLayer.Interfaces;
 
-namespace Ladeskab
+namespace LogicLayer.Controllers
 {
     public class StationControl
     {
