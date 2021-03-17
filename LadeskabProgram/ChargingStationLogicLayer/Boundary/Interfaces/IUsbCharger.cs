@@ -3,8 +3,6 @@ using EventArguments;
 
 namespace LogicLayer.Boundary.Interfaces
 {
-
-
     public interface IUsbCharger
     {
         // Event triggered on new current value
