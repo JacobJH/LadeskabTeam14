@@ -3,6 +3,7 @@ using System.Timers;
 using LogicLayer.Boundary.Interfaces;
 using EventArguments;
 
+
 namespace LogicLayer.Boundary
 {
     public class UsbChargerSimulator : IUsbCharger

@@ -1,6 +1,6 @@
 ﻿using System;
-using DataAccesLayerChargingStation.Interfaces;
-using PresentationsLag;
+using LogicLayer.Boundary;
+using LogicLayer.Boundary.Interfaces;
 
 class Program
 {
