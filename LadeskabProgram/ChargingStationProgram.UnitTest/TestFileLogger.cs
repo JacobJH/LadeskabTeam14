@@ -37,5 +37,20 @@ namespace UsbSimulator.Test
             Assert.That(loadFile[loadFile.Length-1],Is.EqualTo("Door looked by " + id));
 
         }
+
+        [TestCase(1)]
+        [TestCase(20)]
+        public void LogDoorIsUnlocked(int id)
+        {
+            //arrange 
+
+            //act 
+            _uut.LogDoorUnLocked(id);
+
+            //assert
+            string[] loadFile = File.ReadAllLines(filePath + "LogFile.txt");
+            Assert.That(loadFile[loadFile.Length - 1], Is.EqualTo("Door unlocked by " + id));
+
+        }
     }
 }

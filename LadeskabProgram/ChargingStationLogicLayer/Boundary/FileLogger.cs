@@ -24,7 +24,7 @@ namespace LogicLayer.Boundary
         public void LogDoorUnLocked(int id)
         {
             StreamWriter writer = File.AppendText(filePath + "LogFile.txt");
-            writer.WriteLine("Door opened by " + id);
+            writer.WriteLine("Door unlocked by " + id);
             writer.Flush();
             writer.Close();
         }
