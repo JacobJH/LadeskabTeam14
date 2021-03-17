@@ -1,6 +1,7 @@
 ﻿using System;
+using LogicLayer.Boundary.Interfaces;
 
-namespace LogicLayer.Boundary.Interfaces
+namespace LogicLayer.Boundary
 {
     public class FileLogger : ILogger
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataAccesLayerChargingStation.Interfaces
+namespace LogicLayer.Boundary
 {
     public class DoorSimulator : IDoor
     {

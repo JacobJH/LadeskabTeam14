@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UsbSimulator
+namespace LogicLayer.Boundary.Interfaces
 {
     public class CurrentEventArgs : EventArgs
     {

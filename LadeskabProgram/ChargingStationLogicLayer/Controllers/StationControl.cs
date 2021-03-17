@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccesLayerChargingStation.Interfaces;
 using Ladeskab.Interfaces;
 
-namespace Ladeskab
+namespace Ladeskab.Controllers
 {
     public class StationControl
     {
