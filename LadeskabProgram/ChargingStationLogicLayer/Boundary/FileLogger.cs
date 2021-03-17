@@ -10,18 +10,23 @@ namespace LogicLayer.Boundary
 
         public FileLogger()
         {
-            File.Create(filePath + "LogFile.txt");
         }
 
 
         public void LogDoorLocked(int id)
         {
-            File.AppendText("Door looked by " + id);
+            StreamWriter writer = File.AppendText(filePath + "LogFile.txt");
+            writer.WriteLine("Door looked by " + id);
+            writer.Flush();
+            writer.Close();
         }
 
         public void LogDoorUnLocked(int id)
         {
-            File.AppendText("Door opened by " + id);
+            StreamWriter writer = File.AppendText(filePath + "LogFile.txt");
+            writer.WriteLine("Door opened by " + id);
+            writer.Flush();
+            writer.Close();
         }
     }
 }
