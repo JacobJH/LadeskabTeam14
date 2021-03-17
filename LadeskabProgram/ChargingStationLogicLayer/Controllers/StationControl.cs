@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventArguments;
 using LogicLayer.Boundary.Interfaces;
 
 namespace LogicLayer.Controllers
@@ -23,14 +24,32 @@ namespace LogicLayer.Controllers
         private IChargeControl _charger;
         private int _oldId;
         private IDoor _door;
+        private IDisplay _disp;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
+        
+
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+
+        public StationControl(IChargeControl charger, int oldId, IDoor door, IDisplay disp)
         {
+            _charger = charger;
+            _oldId = oldId;
+            _door = door;
+            _disp = disp;
+        }
+
+
+        #region EventHandlers
+
+        //private void RfidDetected(int id)
+        private void RfidDetected(object sender, RFIDDetectedArgs e)
+        {
+            int id = e.IncomingRFIDFromScanner;
+
             switch (_state)
             {
                 case LadeskabState.Available:
@@ -82,6 +101,33 @@ namespace LogicLayer.Controllers
             }
         }
 
-        // Her mangler de andre trigger handlere
+        //TODO mangler Tests
+
+        private void DoorOpened(object sender, DoorEventArgs e)
+        {
+            if (e.EventDoorState == DoorState.Opened)
+            {
+                _state = LadeskabState.DoorOpen;
+                _disp.DisplayMessage("Tilslut telefon");
+            }
+            else
+            {
+                _disp.DisplayMessage("Fejl, med at åbne døren");
+            }
+        }
+        //TODO mangler Tests
+
+        private void DoorClosed(object sender, DoorEventArgs e)
+        {
+            if (e.EventDoorState == DoorState.Opened)
+            {
+                _state = LadeskabState.Available;
+                _disp.DisplayMessage("Indlæs RFID");
+            }
+        }
+        //TODO mangler Tests
+        #endregion
+
+
     }
 }

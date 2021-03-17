@@ -7,14 +7,23 @@ namespace LogicLayer.Controllers
 {
     public class ChargeControl: IChargeControl
     {
+        private IDisplay display;
+        private IUsbCharger usbCharger;
+        public ChargeControl(IDisplay display, IUsbCharger usbCharger)
+        {
+            this.display = display;
+            this.usbCharger = usbCharger;
+        }
         public void StartCharge()
         {
-            throw new NotImplementedException();
+            usbCharger.StartCharge();
+            display.DisplayMessage("Telefonen lader");
         }
 
         public void StopCharge()
         {
-            throw new NotImplementedException();
+            usbCharger.StopCharge();
+            display.DisplayMessage("Telefonon lader ikke");
         }
 
         public bool Connected { get; set; }
