@@ -1,10 +1,14 @@
 ﻿using System;
+using EventArguments;
 using LogicLayer.Boundary.Interfaces;
 
 namespace LogicLayer.Boundary
 {
     public class DoorSimulator : IDoor
     {
+        public event EventHandler<DoorEventArgs> openDoorEvent;
+        public event EventHandler<DoorEventArgs> closeDoorEvent;
+
         public DoorSimulator()
         {
         }
@@ -16,12 +20,12 @@ namespace LogicLayer.Boundary
 
         public void OnDoorOpen()
         {
-            throw new NotImplementedException();
+            openDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Opened });
         }
 
         public void OnDoorClose()
         {
-            throw new NotImplementedException();
+            closeDoorEvent?.Invoke(this, new DoorEventArgs() { EventDoorState = DoorState.Closed });
         }
 
         public void LockDoor()
