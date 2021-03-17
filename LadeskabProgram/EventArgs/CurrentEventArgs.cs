@@ -4,7 +4,7 @@ namespace EventArguments
 {
     public class CurrentEventArgs : EventArgs
     {
-        public double CurrentValue { get; set; }
-
+        // Value in mA (milliAmpere)
+        public double Current { set; get; }
     }
 }

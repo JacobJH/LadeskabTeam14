@@ -1,12 +1,9 @@
 ﻿using System;
+using EventArguments;
 
 namespace LogicLayer.Boundary.Interfaces
 {
-    public class CurrentEventArgs : EventArgs
-    {
-        // Value in mA (milliAmpere)
-        public double Current { set; get; }
-    }
+
 
     public interface IUsbCharger
     {
