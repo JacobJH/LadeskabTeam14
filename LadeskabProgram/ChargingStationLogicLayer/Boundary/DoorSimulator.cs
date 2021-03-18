@@ -17,8 +17,8 @@ namespace LogicLayer.Boundary
             DoorIsLocked = false;
             DoorIsOpen = false;
         }
-
-
+        //TODO Skriv kode til de resterende Notimplemented ting. -Lars
+        //TODO Skriv tests til metoderne i DoorSimulator - Lars
         public void UnlockDoor()
         {
             if (DoorIsLocked && !DoorIsOpen)
