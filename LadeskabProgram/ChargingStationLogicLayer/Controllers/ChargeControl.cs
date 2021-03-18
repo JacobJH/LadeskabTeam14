@@ -7,6 +7,8 @@ namespace LogicLayer.Controllers
 {
     public class ChargeControl: IChargeControl
     {
+        //TODO test og skriv færdig - Jacob 
+
         private IDisplay display;
         private IUsbCharger usbCharger;
         public ChargeControl(IDisplay display, IUsbCharger usbCharger)

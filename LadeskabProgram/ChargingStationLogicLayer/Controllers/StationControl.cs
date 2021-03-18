@@ -46,6 +46,9 @@ namespace LogicLayer.Controllers
         #region EventHandlers
 
         //private void RfidDetected(int id)
+
+
+        //TODO ændres til log og display - signe
         private void RfidDetected(object sender, RFIDDetectedArgs e)
         {
             int id = e.IncomingRFIDFromScanner;
@@ -101,7 +104,7 @@ namespace LogicLayer.Controllers
             }
         }
 
-        //TODO mangler Tests
+        //TODO mangler Tests - Lasse 
 
         private void DoorOpened(object sender, DoorEventArgs e)
         {
@@ -115,7 +118,7 @@ namespace LogicLayer.Controllers
                 _disp.DisplayMessage("Fejl, med at åbne døren");
             }
         }
-        //TODO mangler Tests
+        //TODO mangler Tests - Lasse 
 
         private void DoorClosed(object sender, DoorEventArgs e)
         {
@@ -125,7 +128,7 @@ namespace LogicLayer.Controllers
                 _disp.DisplayMessage("Indlæs RFID");
             }
         }
-        //TODO mangler Tests
+        //TODO mangler Tests  - Lasse 
         #endregion
 
 
