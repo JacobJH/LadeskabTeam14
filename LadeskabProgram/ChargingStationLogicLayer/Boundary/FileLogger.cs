@@ -8,8 +8,6 @@ namespace LogicLayer.Boundary
     {
         private const string filePath = @"";
 
-
-        //TODO lav ekstra test - signe
         public void LogDoorLocked(int id)
         {
             StreamWriter writer = File.AppendText(filePath + "LogFile.txt");

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventArguments;
+using LogicLayer.Boundary;
 using LogicLayer.Boundary.Interfaces;
 
 namespace LogicLayer.Controllers
@@ -25,6 +26,7 @@ namespace LogicLayer.Controllers
         private int _oldId;
         private IDoor _door;
         private IDisplay _disp;
+        private ILogger _logger;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
@@ -34,12 +36,13 @@ namespace LogicLayer.Controllers
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
 
-        public StationControl(IChargeControl charger, int oldId, IDoor door, IDisplay disp)
+        public StationControl(IChargeControl charger, int oldId, IDoor door, IDisplay disp, ILogger logger)
         {
             _charger = charger;
             _oldId = oldId;
             _door = door;
             _disp = disp;
+            _logger = logger;
         }
 
 
@@ -47,8 +50,6 @@ namespace LogicLayer.Controllers
 
         //private void RfidDetected(int id)
 
-
-        //TODO ændres til log og display - signe
         private void RfidDetected(object sender, RFIDDetectedArgs e)
         {
             int id = e.IncomingRFIDFromScanner;
@@ -62,17 +63,13 @@ namespace LogicLayer.Controllers
                         _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        }
-
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        _logger.LogDoorLocked(id);
+                        _disp.DisplayMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        _disp.DisplayMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
                     }
 
                     break;
@@ -87,17 +84,13 @@ namespace LogicLayer.Controllers
                     {
                         _charger.StopCharge();
                         _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
-
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        _logger.LogDoorUnLocked(id);
+                        _disp.DisplayMessage("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        _disp.DisplayMessage("Forkert RFID tag");
                     }
 
                     break;
