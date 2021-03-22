@@ -23,7 +23,8 @@ namespace LogicLayer.Boundary
         {
             if (DoorIsLocked && !DoorIsOpen)
             {
-                throw new NotImplementedException();
+                DoorIsLocked = false;
+                Console.WriteLine("Døren er nu låst op");
             }
             else
             {
@@ -66,7 +67,8 @@ namespace LogicLayer.Boundary
         {
             if (!DoorIsLocked && !DoorIsOpen)
             {
-                throw new NotImplementedException();
+                DoorIsLocked = true;
+                Console.WriteLine("Døren er nu låst");
             }
             else
             {

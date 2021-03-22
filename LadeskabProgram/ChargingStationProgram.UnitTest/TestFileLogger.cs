@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using LogicLayer.Boundary;
 
-namespace UsbSimulator.Test
+namespace ChargingStationProgram.UnitTest
 {
     [TestFixture]
     public class TestFileLogger
