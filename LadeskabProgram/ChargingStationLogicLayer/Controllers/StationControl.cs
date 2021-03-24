@@ -71,7 +71,7 @@ namespace LogicLayer.Controllers
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_charger.IsConnected())
                     {
                         _door.LockDoor();
                         _charger.StartCharge();
@@ -128,10 +128,19 @@ namespace LogicLayer.Controllers
 
         private void DoorClosed(object sender, DoorEventArgs e)
         {
-            if (e.EventDoorState == DoorState.Opened)
-            {
+            if (e.EventDoorState == DoorState.Closed)
+            {   
                 _state = LadeskabState.Available;
-                _disp.DisplayMessage("Indlæs RFID");
+
+                if (_charger.IsConnected())
+                {
+                    _disp.DisplayMessage("Indlæs RFID");
+                }
+                else
+                {
+                    _disp.DisplayMessage("Ladeskab tilgængelig for en anden telefon");
+                }
+
             }
         }
         //TODO mangler Tests  - Lasse 

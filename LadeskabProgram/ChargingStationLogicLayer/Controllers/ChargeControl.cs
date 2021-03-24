@@ -30,11 +30,11 @@ namespace LogicLayer.Controllers
             display.DisplayMessage("Telefonon lader ikke");
         }
 
-        public bool Connected { get; set; }
+//        public bool Connected { get; set; }
         //Lav metode is connected som checker om usb charger is connected
-        public void IsConnected()
+        public bool IsConnected()
         {
-            isConnectedEvent?.Invoke(this, new USBConnectedEventArgs() { Connected = this.Connected });
+            return usbCharger.Connected;
         }
     }
 }

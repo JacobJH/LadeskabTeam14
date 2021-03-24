@@ -18,5 +18,8 @@ namespace LogicLayer.Boundary.Interfaces
         void StartCharge();
         // Stop charging
         void StopCharge();
+
+
+        void SimulateConnected(bool connected);
     }
 }
