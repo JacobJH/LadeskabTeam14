@@ -10,6 +10,9 @@ namespace LogicLayer.Boundary.Interfaces
         public event EventHandler<DoorEventArgs> openDoorEvent;
         public event EventHandler<DoorEventArgs> closeDoorEvent;
 
+        public bool DoorIsOpen { get; }
+        public bool DoorIsLocked { get; }
+
         public void LockDoor();
         
         public void UnlockDoor();

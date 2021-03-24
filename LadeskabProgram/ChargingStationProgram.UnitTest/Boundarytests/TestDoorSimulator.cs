@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using EventArguments;
 using LogicLayer.Boundary;
@@ -35,6 +36,135 @@ namespace ChargingStationProgram.UnitTest
                 openDoorArgs = args;
             };
         }
+
+        [Test]
+        public void DoorStatus_IsClosedAndUnlocked_ByDefaultNoEventTriggered()
+        {
+            //act
+
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(openDoorArgs, Is.Null);
+                Assert.That(closeDoorArgs, Is.Null);
+                Assert.That(uut.DoorIsLocked,Is.False);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+        #region TestOfDoorStatus
+
+        [Test]
+        public void DoorStatus_IsOpened_DoorIsOpenIsTrue()
+        {
+            //act
+            uut.OnDoorOpen();
+
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.True);
+            });
+        }
+
+        [Test]
+        public void DoorStatus_IsUnlocked_DoorIsLockedIsFalse()
+        {
+            //act
+            uut.UnlockDoor();
+
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+
+        [Test]
+        public void DoorStatus_IsOpenAndUnlocked_DoorIsOpenIsTrue()
+        {
+            //act
+            uut.OnDoorOpen();
+            uut.UnlockDoor();
+
+            //Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.True);
+            });
+        }
+
+        [Test]
+        public void DoorStatus_IsClosedAndLocked_DoorIsLockedIsTrue()
+        {
+            //act
+            uut.LockDoor();
+
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.True);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+        [Test]
+        public void DoorStatus_IsLockedAndUnlocked_DoorIsLockedIsFalse()
+        {
+            //act
+            uut.LockDoor();
+            uut.UnlockDoor();
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+        [Test]
+        public void DoorStatus_IsLockedAndOpened_DoorIsLockedIsTrueAndDoorIsClosed()
+        {
+            //act
+            uut.LockDoor();
+            uut.OnDoorOpen();
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.True);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+        [Test]
+        public void DoorStatus_IsOpenedAndLocked_DoorIsOpenAndNotLocked()
+        {
+            //act
+            uut.OnDoorOpen();
+            uut.LockDoor();
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.True);
+            });
+        }
+
+
+        #endregion
+
+        #region TestOfDoorEvents
 
         [Test]
         public void OnDoorClosed_ClosedAndUnlocked_NoEventTriggers()
@@ -149,5 +279,6 @@ namespace ChargingStationProgram.UnitTest
                 Assert.That(openDoorArgs, Is.Null);
             });
         }
+        #endregion
     }
 }
