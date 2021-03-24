@@ -13,7 +13,7 @@ namespace LogicLayer.Controllers
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
@@ -22,6 +22,21 @@ namespace LogicLayer.Controllers
 
         // Her mangler flere member variable
         private LadeskabState _state;
+
+        public LadeskabState state
+        {
+            set
+            {
+                if (_state == null)
+                {
+                    _state = value;
+                };
+            }
+            get { return _state; }
+        }
+
+
+
         private IChargeControl _charger;
         private int _oldId;
         private IDoor _door;
@@ -30,25 +45,23 @@ namespace LogicLayer.Controllers
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        // Her mangler constructor
-        
-
-
-        // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-
-        public StationControl(IChargeControl charger, int oldId, IDoor door, IDisplay disp, ILogger logger)
-        {
-            _charger = charger;
-            _oldId = oldId;
-            _door = door;
-            _disp = disp;
-            _logger = logger;
-        }
-
-
         #region EventHandlers
 
         //private void RfidDetected(int id)
+
+        public StationControl(IChargeControl charger, IDoor door, IDisplay disp, ILogger logger, IRFID reader)
+        {
+            _charger = charger;
+            _door = door;
+            _disp = disp;
+            _logger = logger;
+
+            reader.RFIDReaderEvent += RfidDetected;
+            _door.openDoorEvent += DoorOpened;
+            _door.closeDoorEvent += DoorClosed;
+
+            state = LadeskabState.Available;
+        }
 
         private void RfidDetected(object sender, RFIDDetectedArgs e)
         {
