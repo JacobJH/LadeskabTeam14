@@ -56,7 +56,7 @@ namespace ChargingStationProgram.UnitTest
         #region TestOfDoorStatus
 
         [Test]
-        public void DoorStatus_IsOpenAndUnlocked_DoorIsOpenIsTrue()
+        public void DoorStatus_IsOpened_DoorIsOpenIsTrue()
         {
             //act
             uut.OnDoorOpen();
@@ -70,6 +70,36 @@ namespace ChargingStationProgram.UnitTest
             });
         }
 
+        [Test]
+        public void DoorStatus_IsUnlocked_DoorIsLockedIsFalse()
+        {
+            //act
+            uut.UnlockDoor();
+
+            //Assert
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.False);
+            });
+        }
+
+
+        [Test]
+        public void DoorStatus_IsOpenAndUnlocked_DoorIsOpenIsTrue()
+        {
+            //act
+            uut.OnDoorOpen();
+            uut.UnlockDoor();
+
+            //Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(uut.DoorIsLocked, Is.False);
+                Assert.That(uut.DoorIsOpen, Is.True);
+            });
+        }
 
         [Test]
         public void DoorStatus_IsClosedAndLocked_DoorIsLockedIsTrue()
