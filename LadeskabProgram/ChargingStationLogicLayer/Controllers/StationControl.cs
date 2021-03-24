@@ -110,8 +110,7 @@ namespace LogicLayer.Controllers
             }
         }
 
-        //TODO mangler Tests - Lasse 
-
+        //Denne kan ikke testes :? kun hvis vi tester på hvad der skrives ud :? men altså det kan vi ikke. Spørg frank
         private void DoorOpened(object sender, DoorEventArgs e)
         {
             if (e.EventDoorState == DoorState.Opened)
