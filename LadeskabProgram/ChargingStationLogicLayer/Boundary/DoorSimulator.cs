@@ -9,8 +9,8 @@ namespace LogicLayer.Boundary
         public event EventHandler<DoorEventArgs> openDoorEvent;
         public event EventHandler<DoorEventArgs> closeDoorEvent;
 
-        private bool DoorIsOpen;
-        private bool DoorIsLocked;
+        public bool DoorIsOpen { get; private set; }
+        public bool DoorIsLocked { get; private set; }
 
         public DoorSimulator()
         {
