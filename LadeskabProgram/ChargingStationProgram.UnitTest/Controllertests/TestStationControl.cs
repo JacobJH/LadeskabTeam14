@@ -142,7 +142,7 @@ namespace ChargingStationProgram.UnitTest
         }
 
 
-        public void DoorOpened_EventArgIsOpening_Door
+//        public void DoorOpened_EventArgIsOpening_Door
 
     }
 }
