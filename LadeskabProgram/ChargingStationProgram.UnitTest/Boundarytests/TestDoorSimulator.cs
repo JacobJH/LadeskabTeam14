@@ -15,8 +15,6 @@ namespace ChargingStationProgram.UnitTest
         private DoorEventArgs openDoorArgs;
         private DoorEventArgs closeDoorArgs;
 
-        // TODO spørg de andre om hvordan man tester metoderne til at låse/låse op for døren
-
         [SetUp]
         public void Setup()
         {

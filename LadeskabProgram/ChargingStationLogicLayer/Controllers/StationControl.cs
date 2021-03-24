@@ -20,7 +20,6 @@ namespace LogicLayer.Controllers
             DoorOpen
         };
 
-        // Her mangler flere member variable
         private LadeskabState _state;
 
         public LadeskabState state
@@ -42,8 +41,6 @@ namespace LogicLayer.Controllers
         private IDoor _door;
         private IDisplay _disp;
         private ILogger _logger;
-
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         #region EventHandlers
 
@@ -71,7 +68,7 @@ namespace LogicLayer.Controllers
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_charger.IsConnected())
                     {
                         _door.LockDoor();
                         _charger.StartCharge();
@@ -123,17 +120,25 @@ namespace LogicLayer.Controllers
                 _disp.DisplayMessage("Fejl, med at åbne døren");
             }
         }
-        //TODO mangler Tests - Lasse 
 
         private void DoorClosed(object sender, DoorEventArgs e)
         {
-            if (e.EventDoorState == DoorState.Opened)
-            {
+            if (e.EventDoorState == DoorState.Closed)
+            {   
                 _state = LadeskabState.Available;
-                _disp.DisplayMessage("Indlæs RFID");
+
+                if (_charger.IsConnected())
+                {
+                    _disp.DisplayMessage("Indlæs RFID");
+                }
+                else
+                {
+                    _disp.DisplayMessage("Ladeskab tilgængelig for en anden telefon");
+                }
+
             }
         }
-        //TODO mangler Tests  - Lasse 
+
         #endregion
 
 

@@ -16,6 +16,7 @@ namespace ChargingStationProgram.UnitTest
         private ChargeControl uut;
         private IDisplay display;
         private IUsbCharger usbCharger;
+        private USBConnectedEventArgs usbConnectedArgs;
         [SetUp]
         public void Setup()
         {
@@ -23,6 +24,13 @@ namespace ChargingStationProgram.UnitTest
             display = Substitute.For<IDisplay>();
             usbCharger = Substitute.For<IUsbCharger>();
             uut = new ChargeControl(display, usbCharger);
+
+            usbConnectedArgs = null;
+
+            uut.isConnectedEvent += (o, args) =>
+            {
+                usbConnectedArgs = args;
+            };
         }
         [Test]
         public void StartCharge_Call_Sent()
@@ -31,12 +39,17 @@ namespace ChargingStationProgram.UnitTest
             uut.StartCharge();
 
             //assert
-            Assert.Multiple(() =>
-            {
-                usbCharger.Received(1).StartCharge();
-                display.Received(1).DisplayMessage("Telefonen lader");
+            usbCharger.Received(1).StartCharge();
+        }
+        [Test]
+        public void StartCharge_DisplayCall_Sent()
+        {
+            //act
+            uut.StartCharge();
 
-            });
+            //assert
+
+            display.Received(1).DisplayMessage("Telefonen lader");
         }
         [Test]
         public void StopCharge_Call_Sent()
@@ -45,12 +58,27 @@ namespace ChargingStationProgram.UnitTest
             uut.StopCharge();
 
             //assert
-            Assert.Multiple(() =>
-            {
-                usbCharger.Received(1).StopCharge();
-                display.Received(1).DisplayMessage("Telefonon lader ikke");
+            usbCharger.Received(1).StopCharge();
 
-            });
         }
+        [Test]
+        public void StopCharge_DisplayCall_Sent()
+        {
+            //act
+            uut.StopCharge();
+
+            //assert
+
+            display.Received(1).DisplayMessage("Telefonon lader ikke");
+        }
+        //[Test]
+        //public void Eventstuff()
+        //{
+        //    //act
+        //    uut.IsConnected();
+
+        //    //assert
+        //    Assert
+        //}
     }
 }
