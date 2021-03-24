@@ -20,7 +20,6 @@ namespace LogicLayer.Controllers
             DoorOpen
         };
 
-        // Her mangler flere member variable
         private LadeskabState _state;
 
         public LadeskabState state
@@ -42,8 +41,6 @@ namespace LogicLayer.Controllers
         private IDoor _door;
         private IDisplay _disp;
         private ILogger _logger;
-
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         #region EventHandlers
 
@@ -110,7 +107,6 @@ namespace LogicLayer.Controllers
             }
         }
 
-        //TODO mangler Tests - Lasse 
 
         private void DoorOpened(object sender, DoorEventArgs e)
         {
@@ -124,7 +120,6 @@ namespace LogicLayer.Controllers
                 _disp.DisplayMessage("Fejl, med at åbne døren");
             }
         }
-        //TODO mangler Tests - Lasse 
 
         private void DoorClosed(object sender, DoorEventArgs e)
         {
@@ -143,7 +138,7 @@ namespace LogicLayer.Controllers
 
             }
         }
-        //TODO mangler Tests  - Lasse 
+
         #endregion
 
 
