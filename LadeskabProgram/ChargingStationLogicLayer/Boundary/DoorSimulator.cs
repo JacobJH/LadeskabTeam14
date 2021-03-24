@@ -9,6 +9,8 @@ namespace LogicLayer.Boundary
         public event EventHandler<DoorEventArgs> openDoorEvent;
         public event EventHandler<DoorEventArgs> closeDoorEvent;
 
+        //BEMÆRK: her simuleres døren ved at udskrive på console vinduet - derfor anvendes displayet ikke til denne udskrift 
+
         public bool DoorIsOpen { get; private set; }
         public bool DoorIsLocked { get; private set; }
 
@@ -17,18 +19,18 @@ namespace LogicLayer.Boundary
             DoorIsLocked = false;
             DoorIsOpen = false;
         }
-        //TODO Skriv kode til de resterende Notimplemented ting. -Lars
-        //TODO Skriv tests til metoderne i DoorSimulator - Lars
+
+
         public void UnlockDoor()
         {
             if (DoorIsLocked && !DoorIsOpen)
             {
                 DoorIsLocked = false;
-                Console.WriteLine("Døren er nu låst op");
+                Console.WriteLine("Døren er nu låst op"); // simulering af åbning 
             }
             else
             {
-                Console.WriteLine("Kan ikke låse døren op, hvis den ikke er lukket og låst");
+                Console.WriteLine("Kan ikke låse døren op, hvis den ikke er lukket og låst"); // simulering af ulåst dør 
             }
         }
 
@@ -43,12 +45,12 @@ namespace LogicLayer.Boundary
                 }
                 else
                 {
-                    Console.WriteLine("Døren er låst og kan ikke åbnes");
+                    Console.WriteLine("Døren er låst og kan ikke åbnes"); // simulering af låst dør  
                 }
             }
             else
             {
-                Console.WriteLine("Kan ikke åbne døren, hvis den allerede er åben");
+                Console.WriteLine("Kan ikke åbne døren, hvis den allerede er åben"); //simulering af åben dør 
             }
             
         }
@@ -68,11 +70,11 @@ namespace LogicLayer.Boundary
             if (!DoorIsLocked && !DoorIsOpen)
             {
                 DoorIsLocked = true;
-                Console.WriteLine("Døren er nu låst");
+                Console.WriteLine("Døren er nu låst"); //simulering af låse dør 
             }
             else
             {
-                Console.WriteLine("Kan ikke låse døren, hvis den ikke er lukket og ulåst");
+                Console.WriteLine("Kan ikke låse døren, hvis den ikke er lukket og ulåst"); //simulering af ulåst dør 
             }
         }
     }
