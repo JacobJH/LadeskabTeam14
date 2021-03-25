@@ -249,7 +249,7 @@ namespace UsbSimulator.Test
         [Test]
         public void StopCharge_SimulateOverload_ShouldOverload()
         {
-            _uut.SimulateOverload(true);
+            _uut.SimulateOverload(false);
             
 
             _uut.StartCharge();
