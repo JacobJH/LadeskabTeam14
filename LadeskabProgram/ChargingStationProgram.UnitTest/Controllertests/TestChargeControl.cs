@@ -81,9 +81,15 @@ namespace ChargingStationProgram.UnitTest
 
 
             //Assert
-            Assert.Catch<ArgumentOutOfRangeException>(() =>
+            Assert.Multiple(() =>
             {
-                usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+                var exception = Assert.Catch<ArgumentOutOfRangeException>(() =>
+                {
+                    usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() {Current = current});
+                });
+                Assert.That(exception.Message,Is.Not.Null.Or.Empty);
+                StringAssert.Contains("Value was below 0",exception.Message);
+
             });
         }
 
