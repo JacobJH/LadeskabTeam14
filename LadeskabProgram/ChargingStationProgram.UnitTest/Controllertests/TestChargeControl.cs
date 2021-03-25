@@ -16,7 +16,6 @@ namespace ChargingStationProgram.UnitTest
         private ChargeControl uut;
         private IDisplay display;
         private IUsbCharger usbCharger;
-        private USBConnectedEventArgs usbConnectedArgs;
         [SetUp]
         public void Setup()
         {
@@ -67,6 +66,9 @@ namespace ChargingStationProgram.UnitTest
 
         //InteractionTest
         [TestCase(-0.0001)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        [TestCase(-3879210)]
         [TestCase(double.MinValue)]
         public void NewChargeHandler_GetCurretBelow0_ErrorThrown(double current)
         {
