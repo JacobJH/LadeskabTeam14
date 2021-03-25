@@ -24,8 +24,10 @@ namespace LogicLayer.Controllers
         public void NewChargeHandler(object sender, CurrentEventArgs e)
         {
             double current = e.Current;
-
-            if (current  <= 0)
+            if (current < 0)
+            {
+                throw new ArgumentOutOfRangeException("Value was below 0");
+            }else if (current  == 0)
             {
             }
             else if (current <= 5)

@@ -61,13 +61,33 @@ namespace ChargingStationProgram.UnitTest
             uut.StopCharge();
 
             //assert
+            display.Received(1).DisplayMessage("Telefonen lader ikke");
+        }
 
-            display.Received(1).DisplayMessage("Telefonon lader ikke");
+
+        //InteractionTest
+        [TestCase(-0.0001)]
+        [TestCase(double.MinValue)]
+        public void NewChargeHandler_GetCurretBelow0_ErrorThrown(double current)
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+
+            ChargeControl uut = new ChargeControl(disp, usb);
+
+
+
+            //Assert
+            Assert.Catch<ArgumentOutOfRangeException>(() =>
+            {
+                usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+            });
         }
 
         //InteractionTest
         [Test]
-        public void NewChargeHandler_GetCurretBelowOrEqualTo0_DosentCallDisplay()
+        public void NewChargeHandler_GetCurretEqualTo0_DosentCallDisplay()
         {
             //Arrange
             IDisplay disp = Substitute.For<IDisplay>();
@@ -83,6 +103,8 @@ namespace ChargingStationProgram.UnitTest
             disp.Received(0).DisplayMessage(Arg.Any<string>());
         }
 
+        [TestCase(0.0001)]
+        [TestCase(2.5)]
         [TestCase(5)]
         public void NewChargeHandler_GetCurretAtBelowOrEqualTo5AndAbove5_CallsDisplay1Time(double current)
         {
@@ -101,7 +123,11 @@ namespace ChargingStationProgram.UnitTest
         }
 
 
+        [TestCase(5.0001)]
         [TestCase(6)]
+        [TestCase(250)]
+        [TestCase(499)]
+        [TestCase(500)]
         public void NewChargeHandler_GetCurretAtBelowOrEqualTo500AndAbove5_CallsDisplay1Time(double current)
         {
             //Arrange
@@ -118,7 +144,10 @@ namespace ChargingStationProgram.UnitTest
             disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
-        [TestCase(600)]
+        [TestCase(500.0001)]
+        [TestCase(1000)]
+        [TestCase(1000000)]
+        [TestCase(double.MaxValue)]
         public void NewChargeHandler_GetCurretAtAbove500_CallsDisplay1TimeAndCallsStopChargeOnUsbCharger(double current)
         {
             //Arrange
@@ -132,22 +161,45 @@ namespace ChargingStationProgram.UnitTest
 
 
             //Assert
-           // disp.Received(1).DisplayMessage(Arg.Any<string>());
+            disp.Received().DisplayMessage(Arg.Any<string>());
 
             usb.Received(1).StopCharge();
         }
 
 
+        [Test]
+        public void IsConnected_RecivedTrue_ConnectedIsTrue()
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+            ChargeControl uut = new ChargeControl(disp, usb);
+
+            usb.Connected.Returns(true);
+
+            //ACT
+            bool result = uut.IsConnected();
 
 
-        //[Test]
-        //public void Eventstuff()
-        //{
-        //    //act
-        //    uut.IsConnected();
+            //Assert
+            Assert.That(result, Is.True);
+        }
+        [Test]
+        public void IsConnected_RecivedFalse_ConnectedIsfalse()
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+            ChargeControl uut = new ChargeControl(disp, usb);
 
-        //    //assert
-        //    Assert
-        //}
+            usb.Connected.Returns(false);
+
+            //ACT
+            bool result = uut.IsConnected();
+
+
+            //Assert
+            Assert.That(result, Is.False);
+        }
     }
 }
