@@ -246,7 +246,20 @@ namespace UsbSimulator.Test
             Assert.That(lastValue, Is.EqualTo(1000.0));
         }
 
+        [Test]
+        public void StopCharge_SimulateOverload_ShouldOverload()
+        {
+            _uut.SimulateOverload(true);
+            
 
+            _uut.StartCharge();
+
+            System.Threading.Thread.Sleep(300);
+
+            _uut.StopCharge();
+
+            Assert.That(_uut.CurrentValue, Is.EqualTo(0.0));
+        }
 
     }
 }
