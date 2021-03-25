@@ -146,7 +146,7 @@ namespace ChargingStationProgram.UnitTest
             logger.Received(0).LogDoorUnLocked(Arg.Any<int>());
         }
 
-
+        [Test]
         public void DoorOpened_EventArgIsOpening_ShouldCallDisplayWithTextTilsluttelefon()
         {
             //Act
@@ -156,18 +156,38 @@ namespace ChargingStationProgram.UnitTest
             disp.Received(1).DisplayMessage("Tilslut telefon");
         }
 
+        [Test]
         public void DoorOpened_EventArgIsclosed_ShouldCallDisplayWithTextFejlMedAtÅbneDøren()
         {
             //Act
-            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
 
 
             //assert
             disp.Received(1).DisplayMessage("Fejl, med at åbne døren");
         }
 
+        [Test]
+        public void DoorClosed_EventArgIsClosed_ShouldCallDisplayWithTextIndlæsRFID()
+        {
+            //Act
+            door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
 
 
+            //assert
+            disp.Received(1).DisplayMessage("Indlæs RFID");
+        }
+
+        [Test]
+        public void DoorClosed_EventArgIsOpened_ShouldCallDisplayWithTextLadeskabTilgængeligForEnAndentelefon()
+        {
+            //Act
+            door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
+
+
+            //assert
+            disp.Received(1).DisplayMessage("Ladeskab tilgængelig for en anden telefon");
+        }
 
     }
 }
