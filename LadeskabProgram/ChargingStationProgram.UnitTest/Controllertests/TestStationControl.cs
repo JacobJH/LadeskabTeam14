@@ -93,6 +93,8 @@ namespace ChargingStationProgram.UnitTest
             door.Received(0).UnlockDoor();
         }
 
+        [TestCase(-1)]
+        [TestCase(0)]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(52)]
@@ -117,6 +119,9 @@ namespace ChargingStationProgram.UnitTest
             logger.Received(1).LogDoorUnLocked(Arg.Any<int>());
         }
 
+
+        [TestCase(-1)]
+        [TestCase(0)]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(52)]
