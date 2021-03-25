@@ -35,7 +35,7 @@ namespace ChargingStationProgram.UnitTest
             //assert
             string[] loadFile = File.ReadAllLines(filePath + "LogFile.txt");
             Assert.That(loadFile[loadFile.Length-1],Is.EqualTo("Door looked by " + id));
-
+            
         }
 
         [TestCase(1)]

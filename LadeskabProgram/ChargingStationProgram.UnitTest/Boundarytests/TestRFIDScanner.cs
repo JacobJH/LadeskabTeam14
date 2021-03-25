@@ -33,8 +33,6 @@ namespace ChargingStationProgram.UnitTest
         [TestCase(0)]
         [TestCase(int.MinValue)]
         [TestCase(int.MaxValue)]
-        [TestCase(int.MinValue)]
-        [TestCase(int.MaxValue)]
         public void TestEventIsNotNullAfterRFIDRead(int ID)
         {
             //act 
@@ -48,8 +46,6 @@ namespace ChargingStationProgram.UnitTest
         [TestCase(1)]
         [TestCase(-1)]
         [TestCase(0)]
-        [TestCase(int.MinValue)]
-        [TestCase(int.MaxValue)]
         [TestCase(int.MinValue)]
         [TestCase(int.MaxValue)]
         public void TestEventIsCorrectValueAfterRFIDRead(int ID)
