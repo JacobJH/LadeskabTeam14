@@ -12,7 +12,7 @@ namespace LogicLayer.Boundary
         private const double MaxCurrent = 500.0; // mA
         private const double FullyChargedCurrent = 2.5; // mA
         private const double OverloadCurrent = 750; // mA
-        private const int ChargeTimeMinutes = 20; // minutes
+        private const int ChargeTimeMinutes = 1; // minutes
         private const int CurrentTickInterval = 250; // ms
 
         public event EventHandler<CurrentEventArgs> CurrentValueEvent;

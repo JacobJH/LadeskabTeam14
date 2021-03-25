@@ -101,7 +101,16 @@ namespace LogicLayer.Controllers
             if (e.EventDoorState == DoorState.Opened)
             {
                 _state = LadeskabState.DoorOpen;
-                _disp.DisplayMessage("Tilslut telefon");
+
+                if (_charger.IsConnected())
+                {
+                    _disp.DisplayMessage("Tag telefon fra opladeren");
+                }
+                else
+                {
+                    _disp.DisplayMessage("Tilslut telefon");
+                }
+
             }
             else
             {
