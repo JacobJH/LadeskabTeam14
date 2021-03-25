@@ -147,7 +147,27 @@ namespace ChargingStationProgram.UnitTest
         }
 
 
-//        public void DoorOpened_EventArgIsOpening_Door
+        public void DoorOpened_EventArgIsOpening_ShouldCallDisplayWithTextTilsluttelefon()
+        {
+            //Act
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState  = DoorState.Opened});
+
+            //assert
+            disp.Received(1).DisplayMessage("Tilslut telefon");
+        }
+
+        public void DoorOpened_EventArgIsclosed_ShouldCallDisplayWithTextFejlMedAtÅbneDøren()
+        {
+            //Act
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+
+
+            //assert
+            disp.Received(1).DisplayMessage("Fejl, med at åbne døren");
+        }
+
+
+
 
     }
 }
