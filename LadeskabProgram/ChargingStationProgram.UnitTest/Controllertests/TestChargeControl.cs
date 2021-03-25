@@ -24,13 +24,6 @@ namespace ChargingStationProgram.UnitTest
             display = Substitute.For<IDisplay>();
             usbCharger = Substitute.For<IUsbCharger>();
             uut = new ChargeControl(display, usbCharger);
-
-            usbConnectedArgs = null;
-
-            uut.isConnectedEvent += (o, args) =>
-            {
-                usbConnectedArgs = args;
-            };
         }
         [Test]
         public void StartCharge_Call_Sent()
@@ -71,6 +64,82 @@ namespace ChargingStationProgram.UnitTest
 
             display.Received(1).DisplayMessage("Telefonon lader ikke");
         }
+
+        //InteractionTest
+        [Test]
+        public void NewChargeHandler_GetCurretBelowOrEqualTo0_DosentCallDisplay()
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+
+             ChargeControl uut = new ChargeControl(disp, usb);
+
+             //Act
+            usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = 0});
+
+
+            //Assert
+            disp.Received(0).DisplayMessage(Arg.Any<string>());
+        }
+
+        [TestCase(5)]
+        public void NewChargeHandler_GetCurretAtBelowOrEqualTo5AndAbove5_CallsDisplay1Time(double current)
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+
+            ChargeControl uut = new ChargeControl(disp, usb);
+
+            //Act
+            usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+
+
+            //Assert
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
+        }
+
+
+        [TestCase(6)]
+        public void NewChargeHandler_GetCurretAtBelowOrEqualTo500AndAbove5_CallsDisplay1Time(double current)
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+
+            ChargeControl uut = new ChargeControl(disp, usb);
+
+            //Act
+            usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+
+
+            //Assert
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
+        }
+
+        [TestCase(600)]
+        public void NewChargeHandler_GetCurretAtAbove500_CallsDisplay1TimeAndCallsStopChargeOnUsbCharger(double current)
+        {
+            //Arrange
+            IDisplay disp = Substitute.For<IDisplay>();
+            IUsbCharger usb = Substitute.For<IUsbCharger>();
+
+            ChargeControl uut = new ChargeControl(disp, usb);
+
+            //Act
+            usb.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+
+
+            //Assert
+           // disp.Received(1).DisplayMessage(Arg.Any<string>());
+
+            usb.Received(1).StopCharge();
+        }
+
+
+
+
         //[Test]
         //public void Eventstuff()
         //{

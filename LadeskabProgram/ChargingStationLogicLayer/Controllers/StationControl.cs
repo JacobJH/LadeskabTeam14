@@ -22,18 +22,6 @@ namespace LogicLayer.Controllers
 
         private LadeskabState _state;
 
-        public LadeskabState state
-        {
-            set
-            {
-                if (_state == null)
-                {
-                    _state = value;
-                };
-            }
-            get { return _state; }
-        }
-
 
 
         private IChargeControl _charger;
@@ -57,7 +45,7 @@ namespace LogicLayer.Controllers
             _door.openDoorEvent += DoorOpened;
             _door.closeDoorEvent += DoorClosed;
 
-            state = LadeskabState.Available;
+            _state = LadeskabState.Available;
         }
 
         private void RfidDetected(object sender, RFIDDetectedArgs e)
