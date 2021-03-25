@@ -51,7 +51,7 @@ namespace LogicLayer.Controllers
         public void StopCharge()
         {
             usbCharger.StopCharge();
-            display.DisplayMessage("Telefonon lader ikke");
+            display.DisplayMessage("Telefonen lader ikke");
         }
 
         public bool IsConnected()
