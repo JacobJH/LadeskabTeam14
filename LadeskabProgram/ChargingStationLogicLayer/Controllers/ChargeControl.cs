@@ -8,7 +8,6 @@ namespace LogicLayer.Controllers
 {
     public class ChargeControl: IChargeControl
     {
-        public event EventHandler<USBConnectedEventArgs> isConnectedEvent;
         //TODO test og skriv færdig - Jacob 
 
         private IDisplay display;
@@ -17,7 +16,32 @@ namespace LogicLayer.Controllers
         {
             this.display = display;
             this.usbCharger = usbCharger;
+
+            usbCharger.CurrentValueEvent += NewChargeHandler;
         }
+
+
+        public void NewChargeHandler(object sender, CurrentEventArgs e)
+        {
+            double current = e.Current;
+
+            if (current  <= 0)
+            {
+            }
+            else if (current <= 5)
+            {
+                display.DisplayMessage("Telefonen er fuldt opladt");
+            }else if (current <= 500)
+            {
+                display.DisplayMessage("Oplader");
+            }else if(current > 500)
+            {
+                display.DisplayMessage("fejl i opladning");
+                StopCharge();
+            }
+        }
+
+
         public void StartCharge()
         {
             usbCharger.StartCharge();
@@ -27,11 +51,9 @@ namespace LogicLayer.Controllers
         public void StopCharge()
         {
             usbCharger.StopCharge();
-            display.DisplayMessage("Telefonon lader ikke");
+            display.DisplayMessage("Telefonen lader ikke");
         }
 
-//        public bool Connected { get; set; }
-        //Lav metode is connected som checker om usb charger is connected
         public bool IsConnected()
         {
             return usbCharger.Connected;

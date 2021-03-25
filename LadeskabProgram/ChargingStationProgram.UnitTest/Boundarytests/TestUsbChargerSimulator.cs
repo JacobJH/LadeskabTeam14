@@ -22,12 +22,21 @@ namespace UsbSimulator.Test
         [Test]
         public void ctor_IsConnected()
         {
+
+            //Act
+            _uut.SimulateConnected(true);
+            
+            //Assert
             Assert.That(_uut.Connected, Is.True);
         }
 
         [Test]
         public void ctor_CurentValueIsZero()
         {
+            //Act
+            _uut.SimulateConnected(false);
+
+            //Assert
             Assert.That(_uut.CurrentValue, Is.Zero);
         }
 
@@ -93,6 +102,7 @@ namespace UsbSimulator.Test
         {
             ManualResetEvent pause = new ManualResetEvent(false);
             double lastValue = 0;
+            _uut.SimulateConnected(true);
 
             _uut.CurrentValueEvent += (o, args) =>
             {
@@ -120,6 +130,7 @@ namespace UsbSimulator.Test
         {
             ManualResetEvent pause = new ManualResetEvent(false);
             double lastValue = 1000;
+            _uut.SimulateConnected(false);
 
             _uut.CurrentValueEvent += (o, args) =>
             {
@@ -147,6 +158,7 @@ namespace UsbSimulator.Test
         public void SimulateOverload_Start_ReceivesHighValueImmediately()
         {
             double lastValue = 0;
+            _uut.SimulateConnected(true);
 
             _uut.CurrentValueEvent += (o, args) =>
             {
@@ -168,6 +180,8 @@ namespace UsbSimulator.Test
         public void SimulateDisconnected_Start_ReceivesZeroValueImmediately()
         {
             double lastValue = 1000;
+            _uut.SimulateConnected(false);
+
 
             _uut.CurrentValueEvent += (o, args) =>
             {
