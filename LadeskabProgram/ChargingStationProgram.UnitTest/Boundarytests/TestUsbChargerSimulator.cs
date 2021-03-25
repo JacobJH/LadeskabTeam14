@@ -247,18 +247,17 @@ namespace UsbSimulator.Test
         }
 
         [Test]
-        public void StopCharge_SimulateOverload_ShouldOverload()
+        public void startCharge_SimulateNotOverloaded_ShouldreturnGreaterthan490Butbelow500()
         {
             _uut.SimulateOverload(false);
+            _uut.SimulateConnected(true);
             
 
             _uut.StartCharge();
 
             System.Threading.Thread.Sleep(300);
 
-            _uut.StopCharge();
-
-            Assert.That(_uut.CurrentValue, Is.EqualTo(0.0));
+            Assert.That(_uut.CurrentValue, Is.LessThan(500).And.GreaterThan(490));
         }
 
     }
