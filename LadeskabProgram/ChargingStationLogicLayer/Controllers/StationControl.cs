@@ -100,15 +100,28 @@ namespace LogicLayer.Controllers
         {
             if (e.EventDoorState == DoorState.Opened)
             {
-                _state = LadeskabState.DoorOpen;
+                switch (_state)
+                {
+                    case LadeskabState.Available:
+                        _state = LadeskabState.DoorOpen;
 
-                if (_charger.IsConnected())
-                {
-                    _disp.DisplayMessage("Tag telefon fra opladeren");
-                }
-                else
-                {
-                    _disp.DisplayMessage("Tilslut telefon");
+                        if (_charger.IsConnected())
+                        {
+                            _disp.DisplayMessage("Tag telefon fra opladeren");
+                        }
+                        else
+                        {
+                            _disp.DisplayMessage("Tilslut telefon");
+                        }
+                        break;
+
+                    case LadeskabState.DoorOpen:
+                        // Ignore
+                        break;
+
+                    case LadeskabState.Locked:
+                        _disp.DisplayMessage("Lås skabet op for at kunne åbne skabet");
+                        break;
                 }
 
             }
@@ -120,22 +133,29 @@ namespace LogicLayer.Controllers
 
         private void DoorClosed(object sender, DoorEventArgs e)
         {
-            if (e.EventDoorState == DoorState.Closed)
-            {   
-                _state = LadeskabState.Available;
+            switch (_state)
+            {
+                case LadeskabState.Available:
+                    //ignore
+                break;
 
-                if (_charger.IsConnected())
-                {
-                    _disp.DisplayMessage("Indlæs RFID");
-                }
-                else
-                {
-                    _disp.DisplayMessage("Ladeskab tilgængelig for en anden telefon");
-                }
+                case LadeskabState.DoorOpen:
+                    _state = LadeskabState.Available;
 
+                    if (_charger.IsConnected())
+                    {
+                        _disp.DisplayMessage("Indlæs RFID");
+                    }
+                    else
+                    {
+                        _disp.DisplayMessage("Ladeskab tilgængelig for en anden telefon");
+                    }
+                    break;
+
+                case LadeskabState.Locked:
+                    break;
             }
         }
-
         #endregion
 
 

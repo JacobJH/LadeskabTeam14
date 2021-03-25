@@ -34,7 +34,11 @@ namespace ChargingStationProgram.UnitTest
             uut = new StationControl(charger, door, disp, logger, rfid);
         }
 
-        //InteractionTest
+
+
+        #region RfidDetected tests
+
+
         [Test]
         public void RfidDetected_StateIsAvalibleAndConnected_CallLockDoorOnDoorAndStartChargeOnChargeControl()
         {
@@ -145,20 +149,81 @@ namespace ChargingStationProgram.UnitTest
             door.Received(0).UnlockDoor();
             logger.Received(0).LogDoorUnLocked(Arg.Any<int>());
         }
+        #endregion
+
+        #region DoopOpenedTests
 
         [Test]
-        public void DoorOpened_EventArgIsOpening_ShouldCallDisplayWithTextTilsluttelefon()
+        public void DoorOpened_StateIsAvaibleAndMobileIsNotConnected_ShouldCallDisplayWithTextTilsluttelefon()
         {
+            charger.IsConnected().Returns(false);
+            disp.ClearReceivedCalls();
+
             //Act
             door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState  = DoorState.Opened});
 
             //assert
             disp.Received(1).DisplayMessage("Tilslut telefon");
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
         [Test]
+        public void DoorOpened_StateIsAvaibleAndMobileIsConnected_ShouldCallDisplayWithTextTagTelefonFraOpladeren()
+        {
+            charger.IsConnected().Returns(true);
+            disp.ClearReceivedCalls();
+
+            //Act
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+
+            //assert
+            disp.Received(1).DisplayMessage("Tag telefon fra opladeren");
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
+        }
+
+
+
+        [Test]
+        public void DoorOpened_StateIsLocked_ShouldCallDisplayWithTextLåsSkabetOpForAtKunneÅbneSkabet()
+        {
+            //Arrange
+            charger.IsConnected().Returns(true);
+            rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs() {IncomingRFIDFromScanner = 111});
+            disp.ClearReceivedCalls();
+
+
+            //Act
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+
+            //assert
+            disp.Received(1).DisplayMessage("Lås skabet op for at kunne åbne skabet");
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
+        }
+
+        [Test]
+        public void DoorOpened_StateIsOpened_NothingShouldbeCalled()
+        {
+            //Arrange
+            charger.IsConnected().Returns(true);
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            disp.ClearReceivedCalls();
+
+
+            //Act
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+
+            //assert
+            disp.Received(0).DisplayMessage(Arg.Any<string>());
+        }
+        [Test]
         public void DoorOpened_EventArgIsclosed_ShouldCallDisplayWithTextFejlMedAtÅbneDøren()
         {
+            //Arrange
+            charger.IsConnected().Returns(true);
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            disp.ClearReceivedCalls();
+
+
             //Act
             door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
 
@@ -167,27 +232,80 @@ namespace ChargingStationProgram.UnitTest
             disp.Received(1).DisplayMessage("Fejl, med at åbne døren");
         }
 
+
+        #endregion
+
+        #region DoorClosed Tests
         [Test]
-        public void DoorClosed_EventArgIsClosed_ShouldCallDisplayWithTextIndlæsRFID()
+        public void DoorClosed_StateIsAvalible_ShouldNotCallAnything()
         {
+            //Arrange
+            charger.IsConnected().Returns(true);
+            disp.ClearReceivedCalls();
+
+
+            //Act
+            door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
+
+
+            //assert
+            disp.Received(0).DisplayMessage(Arg.Any<string>());
+        }
+
+        [Test]
+        public void DoorClosed_StateIsOpenedAndChargerIsConnected_ShouldCallDisplayWithTextIndlæsRFID()
+        {
+            //Arrange
+            charger.IsConnected().Returns(true);
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            disp.ClearReceivedCalls();
+
+
             //Act
             door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
 
 
             //assert
             disp.Received(1).DisplayMessage("Indlæs RFID");
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
         [Test]
-        public void DoorClosed_EventArgIsOpened_ShouldCallDisplayWithTextLadeskabTilgængeligForEnAndentelefon()
+        public void DoorClosed_StateIsOpenedAndChargerIsNotConnected_ShouldCallDisplayWithTextLadeskabTilgængeligForEnAndenTelefon()
         {
+            //Arrange
+            door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            charger.IsConnected().Returns(false);
+            disp.ClearReceivedCalls();
+
+
             //Act
             door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
 
 
             //assert
             disp.Received(1).DisplayMessage("Ladeskab tilgængelig for en anden telefon");
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
+        [Test]
+        public void DoorClosed_StateIsLocked_ShouldNotDoAnything()
+        {
+            //Arrange
+            rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs() { IncomingRFIDFromScanner = 1 });
+            charger.IsConnected().Returns(false);
+            disp.ClearReceivedCalls();
+
+
+            //Act
+            door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
+
+
+            //assert
+            disp.Received(0).DisplayMessage(Arg.Any<string>());
+        }
+
+
+        #endregion
     }
 }
