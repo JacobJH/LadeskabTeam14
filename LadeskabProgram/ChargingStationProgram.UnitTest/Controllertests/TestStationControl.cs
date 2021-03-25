@@ -47,6 +47,7 @@ namespace ChargingStationProgram.UnitTest
             door.DoorIsLocked.Returns(false);
             door.DoorIsOpen.Returns(false);
             door.closeDoorEvent += Raise.EventWith(new DoorEventArgs(){EventDoorState = DoorState.Closed});
+            disp.ClearReceivedCalls();
 
             //Act
             rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs{});
@@ -55,7 +56,7 @@ namespace ChargingStationProgram.UnitTest
             //Assert
             charger.Received(1).StartCharge();
             door.Received(1).LockDoor();
-            //disp.Received(1).DisplayMessage(Arg.Any<string>());
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
         [Test]
@@ -66,6 +67,7 @@ namespace ChargingStationProgram.UnitTest
             door.DoorIsLocked.Returns(false);
             door.DoorIsOpen.Returns(false);
             door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
+            disp.ClearReceivedCalls();
 
             //Act
             rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs { });
@@ -74,7 +76,7 @@ namespace ChargingStationProgram.UnitTest
             //Assert
             charger.Received(0).StartCharge();
             door.Received(0).LockDoor();
-            //disp.Received(1).DisplayMessage(Arg.Any<string>());
+            disp.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
         [Test]
@@ -85,6 +87,7 @@ namespace ChargingStationProgram.UnitTest
             door.DoorIsLocked.Returns(false);
             door.DoorIsOpen.Returns(false);
             door.openDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Opened });
+            disp.ClearReceivedCalls();
 
             //Act
             rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs { });
@@ -95,6 +98,7 @@ namespace ChargingStationProgram.UnitTest
             charger.Received(0).StopCharge();
             door.Received(0).LockDoor();
             door.Received(0).UnlockDoor();
+            disp.Received(0).DisplayMessage(Arg.Any<string>());
         }
 
         [TestCase(-1)]
@@ -111,6 +115,7 @@ namespace ChargingStationProgram.UnitTest
             door.DoorIsOpen.Returns(false);
             door.closeDoorEvent += Raise.EventWith(new DoorEventArgs() { EventDoorState = DoorState.Closed });
             rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs { IncomingRFIDFromScanner = id});
+            disp.ClearReceivedCalls();
 
 
             //Act
@@ -121,6 +126,7 @@ namespace ChargingStationProgram.UnitTest
             charger.Received(1).StopCharge();
             door.Received(1).UnlockDoor();
             logger.Received(1).LogDoorUnLocked(Arg.Any<int>());
+            disp.Received(1).DisplayMessage("Tag din telefon ud af skabet og luk døren");
         }
 
 
@@ -148,6 +154,7 @@ namespace ChargingStationProgram.UnitTest
             charger.Received(0).StopCharge();
             door.Received(0).UnlockDoor();
             logger.Received(0).LogDoorUnLocked(Arg.Any<int>());
+            disp.Received(1).DisplayMessage("Forkert RFID tag");
         }
         #endregion
 
@@ -292,6 +299,7 @@ namespace ChargingStationProgram.UnitTest
         public void DoorClosed_StateIsLocked_ShouldNotDoAnything()
         {
             //Arrange
+            charger.IsConnected().Returns(true);
             rfid.RFIDReaderEvent += Raise.EventWith(new RFIDDetectedArgs() { IncomingRFIDFromScanner = 1 });
             charger.IsConnected().Returns(false);
             disp.ClearReceivedCalls();

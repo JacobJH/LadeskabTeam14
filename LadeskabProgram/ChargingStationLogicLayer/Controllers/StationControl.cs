@@ -153,6 +153,7 @@ namespace LogicLayer.Controllers
                     break;
 
                 case LadeskabState.Locked:
+                    //Ignored
                     break;
             }
         }

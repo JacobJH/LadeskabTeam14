@@ -67,7 +67,7 @@ namespace ChargingStationProgram.UnitTest
 
         //InteractionTest
         [TestCase(-0.0001)]
-        [TestCase(double.MinValue)]
+        [TestCase(-100000)]
         public void NewChargeHandler_GetCurretBelow0_ErrorThrown(double current)
         {
             //Arrange
