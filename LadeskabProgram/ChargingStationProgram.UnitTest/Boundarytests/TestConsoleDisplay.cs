@@ -19,7 +19,7 @@ namespace ChargingStationProgram.UnitTest.Boundarytests
         public void Setup()
         {
             //arrange 
-            uut = new ConsoleDisplay(); //Door closed and unlocked by default
+            uut = new ConsoleDisplay();
 
             output = new StringWriter();
 
